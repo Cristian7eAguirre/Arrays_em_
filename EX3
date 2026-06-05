@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void lerNomes(char nomes[][50], int n);
+void paraMaiusculas(char s[]);
+void ordenarNomes(char nomes[][50], int n);
+int buscarNome(char nomes[][50], int n, char alvo[]);
+
+int main () {
+    int totalAlunos = 5; 
+    char nomes[5][50]; 
+    char nomeBusca[50];
+
+    lerNomes(nomes, totalAlunos);
+
+    for (int i = 0; i < totalAlunos; i++) {
+        paraMaiusculas(nomes[i]);
+    }
+
+    ordenarNomes(nomes, totalAlunos);
+
+    printf("\n--- Nomes Ordenados em Maiusculas ---\n");
+    for (int i = 0; i < totalAlunos; i++){
+        printf("%d: %s\n", i + 1, nomes[i]);
+    }
+
+    printf("\nDigite um nome para buscar: ");
+    scanf(" %[^\n]", nomeBusca);
+    paraMaiusculas(nomeBusca);
+
+    int indice = buscarNome(nomes, totalAlunos, nomeBusca);
+    if (indice != -1){
+        printf("Nome encontrado na posicao %d da lista ordenada. \n", indice + 1);
+    } else {
+        printf("Nome nao encontrado. \n");
+    }
+
+    return 0;
+}
+
+void lerNomes(char nomes[][50], int n) {
+    printf("Digite o nome de %d alunos:\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("Aluno %d: ", i + 1);
+        scanf(" %[^\n]", nomes[i]);
+    }
+}
+
+void paraMaiusculas(char s[]) {
+    for (int i = 0; s[i] != '\0'; i++){
+        s[i] = toupper(s[i]); 
+    }
+}
+
+void ordenarNomes(char nomes[][50], int n) {
+    char aux[50];
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (strcmp(nomes[j], nomes[j + 1]) > 0) { 
+                strcpy(aux, nomes[j]); 
+                strcpy(nomes[j], nomes[j + 1]); 
+                strcpy(nomes[j + 1], aux); 
+            }
+        }
+    }
+}
+
+int buscarNome(char nomes[][50], int n, char alvo[]) {
+    for (int i = 0; i < n; i++) {
+        if (strcmp(nomes[i], alvo) == 0) { 
+            return i;
+        }
+    }
+    return -1;
+}
