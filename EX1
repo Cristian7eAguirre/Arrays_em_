@@ -1,0 +1,69 @@
+#include <stdio.h>
+
+void lerNotas(float notas[], int n);
+float calcularMedia(float notas[], int n);
+float maiorNota(float notas[], int n);
+float menorNota(float notas[], int n);
+void exibirResultados(float media, float maior, float menor);
+
+int main () {
+    int tamanho = 10;
+    float notas[tamanho]; // Declaração do vetor de 10 posições
+
+    lerNotas(notas, tamanho);
+
+    float media = calcularMedia(notas, tamanho);
+    float maior = maiorNota(notas, tamanho);
+    float menor = menorNota(notas, tamanho);
+
+    exibirResultados(media, maior, menor);
+
+    return 0;
+}
+
+// Implementação das funções:
+
+void lerNotas(float notas[], int n) {
+    printf("Digite as %d notas do aluno:\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("Nota %d: ", i + 1);
+        scanf("%f", &notas[i]);
+    }
+}
+
+float calcularMedia(float notas[], int n) {
+    float soma = 0;
+    for (int i = 0; i < n; i++) {
+        soma += notas[i];
+    }
+    return soma / n;
+}
+
+float maiorNota(float notas[], int n){
+    float maior = notas[0];
+    for (int i = 1; i < n; i++){
+        if (notas[i] > maior){
+            maior = notas[i];
+        }
+    }
+    return maior;
+}
+
+float menorNota(float notas[], int n){
+    float menor = notas[0];
+    for (int i = 1; i < n; i++){
+        if (notas[i] < menor){
+        menor = notas[i];
+        }
+    }
+    return menor;
+}
+
+
+void exibirResultados(float media, float maior, float menor) {
+    printf("\n--- RESULTADOS ---\n");
+    printf("Média da turma: %.2f\n", media);
+    printf("Maior nota: %.2f\n", maior);
+    printf("Menor nota: %.2f\n", menor);
+}
+
