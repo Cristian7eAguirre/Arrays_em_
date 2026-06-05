@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 10 
+
+// Variáveis globais exigidas pelo guia 
+char nomes[MAX][50]; 
+char fones[MAX][20]; 
+int total = 0; 
+
+// Protótipos das funções 
+void cadastrar();
+void listar();
+int buscar(char nome[]);
+void remover(int idx);
+void menu();
+
+int main() {
+    menu();
+    return 0;
+}
+
+// Implementações:
+
+void menu() {
+    int opcao;
+    do {
+        printf("\n=== MINI AGENDA (%d/%d) ===\n", total, MAX);
+        printf("1 - Cadastrar Contato\n");
+        printf("2 - Listar Contatos\n");
+        printf("3 - Buscar Contato\n");
+        printf("4 - Remover Contato\n");
+        printf("0 - Sair\n");
+        printf("Escolha uma opcao: ");
+        
+        if (scanf("%d", &opcao) != 1) {
+            printf("Por favor, insira apenas numeros!\n");
+            while (getchar() != '\n'); // Limpa o buffer
+            opcao = -1; // Força o switch a cair no default
+            continue;
+        }
+
+        switch (opcao) {
+            case 1: cadastrar(); break;
+            case 2: listar(); break;
+            case 3: {
+                char nomeBusca[50];
+                printf("Digite o nome para buscar: ");
+                scanf(" %[^\n]", nomeBusca);
+                int idx = buscar(nomeBusca);
+                if (idx != -1) {
+                    printf("Encontrado: %s -> Tel: %s\n", nomes[idx], fones[idx]);
+                } else {
+                    printf("Contato nao encontrado.\n");
+                }
+                break;
+            }
+            case 4: {
+                char nomeRemover[50];
+                printf("Digite o nome do contato a remover: ");
+                scanf(" %[^\n]", nomeRemover);
+                int idx = buscar(nomeRemover);
+                if (idx != -1) {
+                    remover(idx);
+                } else {
+                    printf("Contato nao encontrado para remocao.\n");
+                }
+                break;
+            }
+            case 0: printf("Saindo do programa...\n"); break;
+            default: printf("Opcao invalida!\n");
+        }
+    } while (opcao != 0);
+}
+
+void cadastrar() {
+    if (total >= MAX) {
+        printf("Erro: Agenda cheia!\n");
+        return;
+    }
+    printf("Nome do contato: ");
+    scanf(" %[^\n]", nomes[total]); // Salva na posição atual do contador global
+    printf("Telefone: ");
+    scanf(" %[^\n]", fones[total]);
+
+    total++; // Incrementa o total de cadastrados
+    printf("Contato cadastrado com sucesso!\n");
+}
+
+void listar() {
+    if (total == 0) {
+        printf("Agenda vazia.\n");
+        return;
+    }
+    printf("\n--- LISTA DE CONTATOS ---\n");
+    for (int i = 0; i < total; i++) {
+        printf("%d. Nome: %-20s | Tel: %s\n", i + 1, nomes[i], fones[i]);
+    }
+}
+
+int buscar(char nome[]) {
+    for (int i = 0; i < total; i++) {
+        if (strcmp(nomes[i], nome) == 0) { 
+            return i; 
+        }
+    }
+    return -1; // Não encontrou 
+}
+
+void remover(int idx) {
+    if (idx != total - 1) { 
+        // Se não for o próprio último elemento sendo apagado, traz o último para cá 
+        strcpy(nomes[idx], nomes[total - 1]); 
+        strcpy(fones[idx], fones[total - 1]); 
+    }
+    total--; // Diminui o tamanho lógico da lista 
+    printf("Contato removido com sucesso!\n");
+}
