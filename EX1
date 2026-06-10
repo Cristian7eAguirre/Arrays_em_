@@ -21,7 +21,6 @@ int main () {
     return 0;
 }
 
-// Implementação das funções:
 
 void lerNotas(float notas[], int n) {
     printf("Digite as %d notas do aluno:\n", n);
