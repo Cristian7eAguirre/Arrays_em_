@@ -3,12 +3,10 @@
 
 #define MAX 10 
 
-// Variáveis globais exigidas pelo guia 
 char nomes[MAX][50]; 
 char fones[MAX][20]; 
 int total = 0; 
-
-// Protótipos das funções 
+ 
 void cadastrar();
 void listar();
 int buscar(char nome[]);
@@ -79,11 +77,11 @@ void cadastrar() {
         return;
     }
     printf("Nome do contato: ");
-    scanf(" %[^\n]", nomes[total]); // Salva na posição atual do contador global
+    scanf(" %[^\n]", nomes[total]);
     printf("Telefone: ");
     scanf(" %[^\n]", fones[total]);
 
-    total++; // Incrementa o total de cadastrados
+    total++;
     printf("Contato cadastrado com sucesso!\n");
 }
 
@@ -108,11 +106,10 @@ int buscar(char nome[]) {
 }
 
 void remover(int idx) {
-    if (idx != total - 1) { 
-        // Se não for o próprio último elemento sendo apagado, traz o último para cá 
+    if (idx != total - 1) {  
         strcpy(nomes[idx], nomes[total - 1]); 
         strcpy(fones[idx], fones[total - 1]); 
     }
-    total--; // Diminui o tamanho lógico da lista 
+    total--;
     printf("Contato removido com sucesso!\n");
 }
