@@ -17,7 +17,6 @@ int main() {
     lerMatriz(temperaturas, DIAS);
     exibirTabela(temperaturas, DIAS);
 
-    // Média diária de cada dia
     printf("\n--- Medias Diarias ---\n");
     for (int i = 0; i < DIAS; i++) {
         printf("%s: %.1f°C\n", NOMES_DIAS[i], mediaDiaria(temperaturas, i));
@@ -74,7 +73,7 @@ int diaQuente(float m[][PERIODOS], int dias) {
             indiceMaiorDia = i; 
         }
     }
-    return indiceMaiorDia; // Retorna o índice do dia (0 a 6)
+    return indiceMaiorDia;
 }
 
 void exibirTabela(float m[][PERIODOS], int dias) {
